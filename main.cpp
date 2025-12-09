@@ -100,13 +100,13 @@ vector<StoryNodeRaw> parseStoryFile(const string &filename) {
 
 // Main Program
 int main() {
-    cout << "Enter your OpenAI API key: ";
-    string apiKey;
-    getline(cin, apiKey);
-
-    string filename = runCurlToOpenAI(apiKey);
-
-    vector<StoryNodeRaw> rawNodes = parseStoryFile(filename);
+    // cout << "Enter your OpenAI API key: ";
+    // string apiKey;
+    // getline(cin, apiKey);
+    //
+    // string filename = runCurlToOpenAI(apiKey);
+    //vector<StoryNodeRaw> rawNodes = parseStoryFile(filename);
+    vector<StoryNodeRaw> rawNodes = parseStoryFile("story.txt");
     if (rawNodes.empty()) {
         cerr << "Story was empty or invalid." << endl;
         return 1;
@@ -119,7 +119,12 @@ int main() {
 
     // TODO: Students, add all remaining nodes
      for (int i = 1; i < rawNodes.size(); i++) {
-         adventureTree.addNode(rawNodes[i].id, "should be childID here", rawNodes[i].text);
+         //adventureTree.addNode(...);
+         // to make my life easier I will use a for loop that will loop through the children of a node, and
+         // add those children instead of just using a regular addNode
+         for (const string& childID : rawNodes[i].children) {
+             adventureTree.addNode(rawNodes[i].id, childID, /* child text would go here (how idk) */ "");
+         }
      }
 
     // TODO: Students, implement a method in Tree<T> called playGame()

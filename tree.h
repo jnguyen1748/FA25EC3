@@ -118,18 +118,25 @@ root = new Node<T>(id, value);
 
     // a node looks like this:
     // [1] TEXT: You stand in a forest clearing. NEXT: 2, 3
-void addNode(const string &parentID, const string &childID, const T &value){
-// 1. find parent node
-Node<T>* parentNode = findNode(parentID);
-if(parentNode == nullptr){
-cout <<"error:null parent" << endl;
-return;
-}
-// create new child node using id and value
-Node<T>* childNode = new Node<T>(childID, value);
-// connect child to parent
-parentNode->children.push_back(childNode);
-}
+    void addNode(const string &parentID, const string &childID, const T &value) {
+        // find parent node
+        Node<T>* parentNode = findNode(parentID);
+        if (parentNode == nullptr) {
+            cout << "parent " << parentID << " not found" << endl;
+            return;
+        }
+        // look for existing child nodes
+        Node<T>* childNode = findNode(childID);
+
+        if (childNode == nullptr) {
+            // if child doesn't exist, can safely create it
+            childNode = new Node<T>(childID, value);
+        }
+
+        // link the  parent -> child (allow multi-parents)
+        parentNode->children.push_back(childNode);
+    }
+
 
 
 Node<T>* findNode(const string &id) {
@@ -172,7 +179,7 @@ Node<T>* findNode(const string &id) {
 
         // safely delete every node once now
         for (Node<T>* node : visited) {
-            delete root;
+            delete node;
         }
     }
 

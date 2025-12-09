@@ -13,3 +13,14 @@ worked on the tree.h for now and getting it put together, to understand how the 
 
 This work extended into the next day, so the commit is on 12/09
 
+problems:
+implementing dfs in tree.h took some planning and thinking. Although I implemented DFS in the
+past assignment, adapting it to this situation, and especially having to use DFS for both delete and findnode
+was a little tricky.
+
+To get around not editing method headers (i assume you cant) I decided to use helper methods. since I forgot how
+class files work in c++ i didnt immediately think to put the helper methods in the private: part of tree, so
+that took some trial and error to figure out.
+
+
+

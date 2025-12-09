@@ -8,6 +8,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unordered_set>
+
 using namespace std;
 
 /*
@@ -38,7 +40,6 @@ public:
     vector<Node<U>*> children;
 
     // TODO: Write constructor
-    // Node(const string &nodeID, const U &value);
 
 // note this will set children to empty
 Node(const string &nodeID, const U &value) :
@@ -66,12 +67,36 @@ private:
         // use this method upon each child (hence the recursion)
         // so we just check each child with a recursion of findNode
         for (Node<T>* child : currNode->children) {
+            // actual recursive call here. remember it calls upon children of node and those children...
             Node<T>* result = findNode2ndpart(child, id);
             if (result != nullptr)
                 return result;
         }
 
         return nullptr;
+    }
+
+
+    // DFS part for destructor (for the most part works the exact same as the above method)
+    void destructor2ndpart(Node<T>* node, unordered_set<Node<T>*>& visited) {
+
+        // edge case
+        if (!node) {
+            return;
+        }
+
+        // if we already visited this node we can stop so we dont log same children twice
+        if (visited.count(node)) {
+            return;
+        }
+
+        // now actually mark node as visited
+        visited.insert(node);
+
+        // now visit all children recursively
+        for (Node<T>* child : node->children) {
+            deleteDFS(child, visited);
+        }
     }
 
 public:
@@ -83,7 +108,6 @@ if(root != nullptr) {
     cout << "root exists" << endl;
     return;
 }
-
 root = new Node<T>(id, value);
 // new root
 }
@@ -131,8 +155,25 @@ Node<T>* findNode(const string &id) {
         }
     }
 
-    ~Tree();
-    // TODO: Free all allocated memory
+    ~Tree() {
+        // TODO: Free all allocated memory
+        // empty tree edge case
+        if (!root) {
+            return;
+        }
+        // use a set to track every node we have already seen (to prevent deleting the same node twice)
+        // if multiple parents were pointing to same child
+        unordered_set<Node<T>*> visited;
+
+        // call recursive delete method (use this to fill in visited with nodes we dont need to delete twice)
+        destructor2ndpart(root, visited);
+
+        // safely delete every node once now
+        for (Node<T>* node : visited) {
+            delete root;
+        }
+    }
+
 };
 
 #endif //FA25EC3_TREE_H

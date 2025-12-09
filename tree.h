@@ -69,8 +69,9 @@ private:
         for (Node<T>* child : currNode->children) {
             // actual recursive call here. remember it calls upon children of node and those children...
             Node<T>* result = findNode2ndpart(child, id);
-            if (result != nullptr)
+            if (result != nullptr) {
                 return result;
+            }
         }
 
         return nullptr;
@@ -118,24 +119,28 @@ root = new Node<T>(id, value);
 
     // a node looks like this:
     // [1] TEXT: You stand in a forest clearing. NEXT: 2, 3
+    // WTF IS GOING ON HERE
     void addNode(const string &parentID, const string &childID, const T &value) {
         // find parent node
         Node<T>* parentNode = findNode(parentID);
-        if (parentNode == nullptr) {
-            cout << "parent " << parentID << " not found" << endl;
+        if (!parentNode) {
             return;
         }
+
+        // if (parentNode == nullptr) {
+        //     cout << "parent " << parentID << " not found" << endl;
+        //     return;
+        // }
         // look for existing child nodes
         Node<T>* childNode = findNode(childID);
-
-        if (childNode == nullptr) {
-            // if child doesn't exist, can safely create it
-            childNode = new Node<T>(childID, value);
+        if (!childNode) {
+            childNode = new Node<T>(childID, value); // value MUST be correct text
         }
-
-        // link the  parent -> child (allow multi-parents)
+        // link the parent -> child (allow multi-parents)
         parentNode->children.push_back(childNode);
     }
+
+
 
 
 
@@ -155,7 +160,7 @@ Node<T>* findNode(const string &id) {
         // 1st for loop: will allow us to go through depth
         for ( int i = 0; i < depth; i++) {
             // first print the id of our node
-            cout << " " << node->id << ": " << endl;
+            cout << " " << node->id << ": " << node->data << endl;
             // then call this to then print all of the children
             // note that each child will print itself then go for children in depth
             for (Node<T>* child : node->children) {

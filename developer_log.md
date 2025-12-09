@@ -73,3 +73,47 @@ node id: 1:  You stand in a forest clearing.
 game end
 
 Now I need to figure out what is wrong here.
+
+problem 3: adding nodes and then actually using add method problems
+
+so initially with our single for loop, we were doing this:
+for each rawNode:
+create node
+create children
+
+however, this resulted in nullpointer errors, as we would reference children that didn't exist
+ex: node 2 might have 4 as child but 4 isn't read yet, so now findNode(4) returns null cause 4 wasnt read yet.
+
+the solution for this was a double for loop structure.
+for each rawNode:
+for each child ID of rawNode:
+addNode(parentID, childID, childText)
+
+this structure is somewhat similar to how we did dfs, but I got stuck here cause i didn't know if it was ok to use 2 for loops,
+since it looked like minimal changes to main were asked of. After doing this, I added collecting the child text value as well,
+using another for loop to look up child text values.
+
+fixing addnode:
+
+the old addnode would work by using the childnode value and always making a new child
+
+Node<T>* childNode = new Node<T>(childID, value);
+parentNode->children.push_back(childNode);  
+
+if we added 1 -> 2 and 3 -> 2, then we would create 2 nodes representing 2.
+(1-2) and (3-2) would be made, instead of a node 2 that has parents 1 and 3.
+
+so the new addnode works by simply checking for null child first
+function addNode(parentID, childID, value):
+
+childNode = findNode(childID)
+if childNode is null:
+childNode = new Node(childID, value)
+
+with this, I was finally able to fix problems 2 and 3, and commited this.
+
+commit 2025/12/09
+
+finally have basic functionallity
+
+

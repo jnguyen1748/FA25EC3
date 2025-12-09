@@ -118,14 +118,23 @@ int main() {
     adventureTree.createRoot(rawNodes[0].id, rawNodes[0].text);
 
     // TODO: Students, add all remaining nodes
-     for (int i = 1; i < rawNodes.size(); i++) {
-         //adventureTree.addNode(...);
-         // to make my life easier I will use a for loop that will loop through the children of a node, and
-         // add those children instead of just using a regular addNode
-         for (const string& childID : rawNodes[i].children) {
-             adventureTree.addNode(rawNodes[i].id, childID, /* child text would go here (how idk) */ "");
-         }
-     }
+     // for (int i = 1; i < rawNodes.size(); i++) {
+    for (int i = 0; i < rawNodes.size(); i++) {
+        //adventureTree.addNode(...);
+        // to make my life easier I will use a for loop that will loop through the children of a node, and
+        // add those children instead of just using a regular addNode
+        for (const string& childID : rawNodes[i].children) {
+            string childText = ""; // empty var to store child text
+            // use this for loop to obtain text for child
+            for (auto &n : rawNodes) {
+                if (n.id == childID) {
+                    childText = n.text;
+                }
+            }
+            adventureTree.addNode(rawNodes[i].id, childID, childText);
+        }
+    }
+
 
     // TODO: Students, implement a method in Tree<T> called playGame()
     // This method should:

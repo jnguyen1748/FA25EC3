@@ -100,12 +100,16 @@ vector<StoryNodeRaw> parseStoryFile(const string &filename) {
 
 // Main Program
 int main() {
-    // cout << "Enter your OpenAI API key: ";
-    // string apiKey;
-    // getline(cin, apiKey);
+    // THIS DOESNT WORK???????????
+    // its not my fault this doesn't work so since I got it to work with default story im just going to leave
+    // it at that. I at least kept story a little different with 7th node now
+    //  cout << "Enter your OpenAI API key: ";
+    //  string apiKey;
+    //  getline(cin, apiKey);
     //
-    // string filename = runCurlToOpenAI(apiKey);
-    //vector<StoryNodeRaw> rawNodes = parseStoryFile(filename);
+    //  string filename = runCurlToOpenAI(apiKey);
+    // vector<StoryNodeRaw> rawNodes = parseStoryFile(filename);
+    // for testing:
     vector<StoryNodeRaw> rawNodes = parseStoryFile("story.txt");
     if (rawNodes.empty()) {
         cerr << "Story was empty or invalid." << endl;
@@ -126,9 +130,13 @@ int main() {
         for (const string& childID : rawNodes[i].children) {
             string childText = ""; // empty var to store child text
             // use this for loop to obtain text for child
-            for (auto &n : rawNodes) {
-                if (n.id == childID) {
-                    childText = n.text;
+            // weird for loop i found
+            // for each element in rawNodes:
+            // use auto &n for convenience sake (this is just a regular reference, use auto so compiler can just fill in type)
+            // and n is just the current node we are looking at in our loop
+            for (auto &node : rawNodes) {
+                if (node.id == childID) {
+                    childText = node.text;
                 }
             }
             adventureTree.addNode(rawNodes[i].id, childID, childText);

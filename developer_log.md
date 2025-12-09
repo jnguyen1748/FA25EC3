@@ -116,4 +116,17 @@ commit 2025/12/09
 
 finally have basic functionallity
 
+commit 2025/12/09 14:49
+finally done
+added story.txt, edited main.cpp, tree.h, and developer_log.md
+
+added some further comments and tried to generate story with api key, but it didnt work, and I didn't feel
+like paying so I just generated my story.txt manually and left it hardcoded. also doubled checked everything and 
+fixed up some of the syntax (things got very unfocused when dealing with problem 2)
+
+Since I am technically not responsible for getting the openai part to work, and just need it to work with
+a story, I will leave things as they are and say this assignment is as good as done
+
+
+
 

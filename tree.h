@@ -82,7 +82,7 @@ private:
     void destructor2ndpart(Node<T>* node, unordered_set<Node<T>*>& visited) {
 
         // edge case
-        if (!node) {
+        if (node == nullptr) {
             return;
         }
 
@@ -123,26 +123,19 @@ root = new Node<T>(id, value);
     void addNode(const string &parentID, const string &childID, const T &value) {
         // find parent node
         Node<T>* parentNode = findNode(parentID);
-        if (!parentNode) {
+        if (parentNode == nullptr) {
+            cout << "parent " << parentID << " not found" << endl;
             return;
         }
 
-        // if (parentNode == nullptr) {
-        //     cout << "parent " << parentID << " not found" << endl;
-        //     return;
-        // }
         // look for existing child nodes
         Node<T>* childNode = findNode(childID);
-        if (!childNode) {
+        if (childNode == nullptr) {
             childNode = new Node<T>(childID, value); // value MUST be correct text
         }
         // link the parent -> child (allow multi-parents)
         parentNode->children.push_back(childNode);
     }
-
-
-
-
 
 Node<T>* findNode(const string &id) {
         // TODO: Use DFS or BFS to search tree
@@ -172,7 +165,7 @@ Node<T>* findNode(const string &id) {
     ~Tree() {
         // TODO: Free all allocated memory
         // empty tree edge case
-        if (!root) {
+        if (root == nullptr) {
             return;
         }
         // use a set to track every node we have already seen (to prevent deleting the same node twice)
@@ -220,7 +213,7 @@ Node<T>* findNode(const string &id) {
 
     void playGame() {
         // edge cases
-        if (!root) {
+        if (root == nullptr) {
             cout << "error: no game data" << endl;
             return;
         }

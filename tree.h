@@ -116,6 +116,8 @@ root = new Node<T>(id, value);
     // TODO: Find parent, create child, link parent to child
     // TODO: Support repeated children under multiple parents
 
+    // a node looks like this:
+    // [1] TEXT: You stand in a forest clearing. NEXT: 2, 3
 void addNode(const string &parentID, const string &childID, const T &value){
 // 1. find parent node
 Node<T>* parentNode = findNode(parentID);
@@ -172,6 +174,79 @@ Node<T>* findNode(const string &id) {
         for (Node<T>* node : visited) {
             delete root;
         }
+    }
+
+    // Students, implement a method in Tree<T> called playGame()
+    // This method should:
+    // 1. Start at the root node.
+    // 2. Display the current node's text.
+    // 3. Display numbered options for each child.
+    // 4. Ask the user which path to take.
+    // 5. Move to the selected child and continue until a node has no children.
+    // 6. Print an ending message.
+    //
+    // notes: remember a node looks like this:
+    // [1] TEXT: You stand in a forest clearing. NEXT: 2, 3
+    // [2] TEXT: You follow a narrow path. NEXT: 4
+    // [3] TEXT: You enter a dark cave. NEXT: 4, 5
+    // [4] TEXT: You find an abandoned hut. NEXT: 6
+    // [5] TEXT: A river blocks your way. NEXT: 6
+    // [6] TEXT: You reach the ancient ruins. NEXT:
+    // valid paths here:
+    // 1 → 2 → 4
+    // 7 is not child of 3 so 3->7 not valid
+    // printed output then:
+    // Node 1: You stand in a forest clearing  Child -> 2  Child -> 3
+    // Node 2: You follow a narrow path  Child -> 4
+    // Node 3: You enter a dark cave  Child -> 4  Child -> 5
+    // Node 4: You find an abandoned hut  Child -> 6
+    // Node 5: A river blocks your way  Child -> 6
+    // Node 6: You reach the ancient ruins Child -> (none)
+    // You are building a dynamic, linked, templated tree that represents a branching adventure story.
+    // It must support nodes with multiple parents and children,
+    // and it must be fully implemented using pointers and dynamic allocation.
+
+    void playGame() {
+        // edge cases
+        if (!root) {
+            cout << "error: no game data" << endl;
+            return;
+        }
+        // starting point
+        Node<T>* start = root;
+        cout << "play start" << endl;
+
+        while (true) {
+            //print the node string data
+            cout<< "node id: " << start->id << ": " << start->data<<endl;
+
+            // if no children -> just end game
+            if (start->children.empty()) {
+                cout<< "game end" << endl;
+                return;
+            }
+
+            // choose which node to go to next
+            cout << "Choose an option:" << endl;
+            for (int i = 0; i < start->children.size(); i++) {
+                cout << " " << (i+1) << ". " << start->children[i]->id << " - " << start->children[i]->data << endl;
+            }
+
+            // user choice
+            int choice = 0;
+            cout << "> " << endl;
+            cin >> choice;
+
+            // validate input
+            if (choice < 1 || choice > start->children.size()) {
+                cout << "invalid choice" << endl;
+                continue;
+            }
+            // go to next node
+            start = start->children[choice - 1];
+
+        }
+        cout<< "game end" << endl;
     }
 
 };

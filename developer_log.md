@@ -22,5 +22,13 @@ To get around not editing method headers (i assume you cant) I decided to use he
 class files work in c++ i didnt immediately think to put the helper methods in the private: part of tree, so
 that took some trial and error to figure out.
 
+problem 2:
+after building tree.h how I thought it was supposed to work, I had to figure out what was meant by // TODO: Students, add all remaining nodes,
+written in the main.cpp. I had no idea what to put in the for loop, and I had to think about the project structure and plan changes
+to tree.h that would be needed. 
 
+well I decided to just leave what I thought was right, and move on to developing playgame(). I am unsure about what to do here, maybe
+it will make more sense after developing playgame();
+
+playgame() actually made sense, so I guess I will make this complete and then go back. 
 

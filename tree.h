@@ -95,7 +95,7 @@ private:
 
         // now visit all children recursively
         for (Node<T>* child : node->children) {
-            deleteDFS(child, visited);
+            destructor2ndpart(child, visited);
         }
     }
 
